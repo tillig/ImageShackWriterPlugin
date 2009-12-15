@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!--
+		* Standard build = msbuild Default.proj
+		* Release build = msbuild Default.proj /p:Configuration=Release
+	-->
+	<PropertyGroup>
+		<Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+		<BuildDir>..\build</BuildDir>
+		<BuildBinDir>$(BuildDir)\bin</BuildBinDir>
+		<BuildLogDir>$(BuildDir)\log</BuildLogDir>
+		<BuildPackageDir>$(BuildDir)\package</BuildPackageDir>
+		<NUnitDir>$(ProgramFiles)\NUnit\bin</NUnitDir>
+	</PropertyGroup>
+	<ItemGroup>
+		<CleanFolders Include="$(BuildDir)"/>
+		<CleanFolders Include="ImageShackWriterPlugin\bin"/>
+		<CleanFolders Include="ImageShackWriterPlugin\obj"/>
+		<CleanFolders Include="ImageShackWriterPluginTests\bin"/>
+		<CleanFolders Include="ImageShackWriterPluginTests\obj"/>
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+	<Target Name="All">
+		<CallTarget Targets="Clean;Compile;Test"/>
+		<CallTarget Targets="Package" Condition="'$(Configuration)' == 'Release'"/>
+		<Message Text="Build complete."/>
+	</Target>
+	<Target Name="Compile">
+		<Message Text="Creating build output folder hierarchy..."/>
+		<MakeDir Directories="$(BuildDir);$(BuildBinDir);$(BuildLogDir)"/>
+		<Message Text="Compiling ImageShackWriterPlugin..."/>
+		<MSBuild Projects="ImageShackWriterPlugin.sln" Properties="Configuration=$(Configuration)"/>
+		<CreateItem Include="ImageShackWriterPlugin\bin\$(Configuration)\**">
+			<Output TaskParameter="Include" ItemName="BuildOutput"/>
+		</CreateItem>
+		<Copy SourceFiles="@(BuildOutput)" DestinationFolder="$(BuildBinDir)"/>
+		<Message Text="Plugin compiled."/>
+	</Target>
+	<Target Name="Clean">
+		<Message Text="Removing compilation artifact folders..."/>
+		<RemoveDir Directories="@(CleanFolders)"/>
+		<Delete Files="@(CleanFiles)"/>
+		<Message Text="Clean complete."/>
+	</Target>
+	<Target Name="Test">
+		<CreateProperty Value="$(BuildLogDir)\TestResults.xml">
+			<Output PropertyName="UnitTestResultsFile" TaskParameter="Value"/>
+		</CreateProperty>
+		<Delete Files="$(UnitTestResultsFile)"/>
+		<Exec Command="&quot;$(NUnitDir)\nunit-console.exe&quot; &quot;ImageShackWriterPluginTests\bin\$(Configuration)\ImageShackWriterPluginTests.dll&quot; /xml=&quot;$(UnitTestResultsFile)&quot;"/>
+	</Target>
+	<Target Name="Package">
+		<MakeDir Directories="$(BuildPackageDir)"/>
+		<GetAssemblyIdentity AssemblyFiles="$(BuildBinDir)\ImageShackWriterPlugin.dll">
+			<Output ItemName="AssemblyIdentities" TaskParameter="Assemblies"/>
+		</GetAssemblyIdentity>
+		<CreateProperty Value="%(AssemblyIdentities.Version)">
+			<Output PropertyName="Version" TaskParameter="Value"/>
+		</CreateProperty>
+		<CreateItem Include="$(BuildBinDir)\ImageShackWriterPlugin.dll;readme.html">
+			<Output ItemName="BinaryPackageFiles" TaskParameter="Include"/>
+		</CreateItem>
+		<Zip Files="@(BinaryPackageFiles)" ZipFileName="$(BuildPackageDir)\ImageShackWriterPlugin-$(Version).zip" Flatten="true"/>
+	</Target>
+</Project>
