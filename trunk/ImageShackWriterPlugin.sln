@@ -1,15 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageShackWriterPlugin", "ImageShackWriterPlugin\ImageShackWriterPlugin.csproj", "{48A2516A-6397-4680-A101-10D93ACE56FC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageShackWriterPluginTests", "ImageShackWriterPluginTests\ImageShackWriterPluginTests.csproj", "{4DF30B3A-8E50-456D-B88E-B2D12A4FE04D}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{41719DB4-AF1D-4339-A1F2-605CD3666DB3}"
 	ProjectSection(SolutionItems) = preProject
 		Default.proj = Default.proj
 		readme.html = readme.html
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageShackWriterPlugin", "ImageShackWriterPlugin\ImageShackWriterPlugin.csproj", "{48A2516A-6397-4680-A101-10D93ACE56FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageShackWriterPluginTests", "ImageShackWriterPluginTests\ImageShackWriterPluginTests.csproj", "{4DF30B3A-8E50-456D-B88E-B2D12A4FE04D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
