@@ -24,7 +24,7 @@ namespace ImageShackWriterPlugin
 		/// <summary>
 		/// URL to the API call for checking validity of a user's registration code.
 		/// </summary>
-		private static readonly Uri RegistrationUrl = new Uri("http://reg.imageshack.us/setlogin.php");
+		private static readonly Uri RegistrationUrl = new Uri("http://my.imageshack.us/setlogin.php");
 
 		/// <summary>
 		/// URL to the API call to upload an image.
@@ -224,6 +224,7 @@ namespace ImageShackWriterPlugin
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url.AbsoluteUri);
 			request.AllowAutoRedirect = true;
 			request.Proxy = PluginHttpRequest.GetWriterProxy();
+			request.Timeout = 120000; // Increase timeout from default 100s to 120s to account for timeouts.
 			if (postData != null || fileToUpload != null)
 			{
 				request.Method = "POST";

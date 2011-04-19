@@ -10,7 +10,7 @@
 		<BuildBinDir>$(BuildDir)\bin</BuildBinDir>
 		<BuildLogDir>$(BuildDir)\log</BuildLogDir>
 		<BuildPackageDir>$(BuildDir)\package</BuildPackageDir>
-		<NUnitDir>$(ProgramFiles)\NUnit\bin</NUnitDir>
+		<NUnitDir>$(MSBuildProjectDirectory)\toolset\nunit</NUnitDir>
 	</PropertyGroup>
 	<ItemGroup>
 		<CleanFolders Include="$(BuildDir)"/>
@@ -47,7 +47,7 @@
 			<Output PropertyName="UnitTestResultsFile" TaskParameter="Value"/>
 		</CreateProperty>
 		<Delete Files="$(UnitTestResultsFile)"/>
-		<Exec Command="&quot;$(NUnitDir)\nunit-console.exe&quot; &quot;ImageShackWriterPluginTests\bin\$(Configuration)\ImageShackWriterPluginTests.dll&quot; /xml=&quot;$(UnitTestResultsFile)&quot;"/>
+		<Exec Command="&quot;$(NUnitDir)\nunit-console.exe&quot; &quot;ImageShackWriterPluginTests\bin\$(Configuration)\ImageShackWriterPluginTests.dll&quot; /xml=&quot;$(UnitTestResultsFile)&quot; /framework:net-4.0"/>
 	</Target>
 	<Target Name="Package">
 		<MakeDir Directories="$(BuildPackageDir)"/>
