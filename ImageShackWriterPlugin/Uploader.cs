@@ -132,6 +132,13 @@ namespace ImageShackWriterPlugin
 		///   &lt;/links&gt;
 		/// &lt;/imginfo&gt;
 		/// </code>
+		/// <para>
+		/// The <c>image_link</c> is the direct link to the image that would normally
+		/// get included in the blog entry; however, ImageShack switched its
+		/// load-balancing mechanism so you don't address servers directly like
+		/// this anymore. The <see cref="ImageShackWriterPlugin.UriExtensions.ToLoadBalancedImageUri"/>
+		/// extension takes care of converting to the new URL format.
+		/// </para>
 		/// </remarks>
 		/// <exception cref="System.ArgumentNullException">
 		/// Thrown if <paramref name="imageFile" /> is <see langword="null" />.
@@ -168,7 +175,7 @@ namespace ImageShackWriterPlugin
 			string url = doc.Root.Element(ns + "links").Element(ns + "image_link").Value;
 			ImageInfo info = new ImageInfo()
 			{
-				Url = new Uri(url),
+				Url = new Uri(url).ToLoadBalancedImageUri(),
 				Width = Convert.ToInt32(resolution.Element(ns + "width").Value),
 				Height = Convert.ToInt32(resolution.Element(ns + "height").Value)
 			};

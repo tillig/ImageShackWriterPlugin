@@ -98,6 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Uploader.cs" />
+    <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="OptionsDialog.resx">
@@ -137,6 +138,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>XCOPY /D /Y /R "$(TargetPath)" "%25ProgramFiles%25\Windows Live\Writer\Plugins\"</PostBuildEvent>
+    <PostBuildEvent>XCOPY /D /Y /R "$(TargetPath)" "%25ProgramFiles(x86)%25\Windows Live\Writer\Plugins\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
