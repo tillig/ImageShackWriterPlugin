@@ -41,6 +41,3 @@ This product requires [Windows Live Writer](http://windowslivewriter.spaces.live
 1. When working on a blog post, open the "Insert" menu and select "ImageShack Upload..."
 1. Select the image file to upload. The plugin will upload it and insert the appropriate HTML into your blog post.
 
-##Additional Info
-
-A full feature list, version history, known issues, etc. are all available on the [ImageShackWriterPlugin project wiki](https://github.com/tillig/ImageShackWriterPlugin/wiki).
